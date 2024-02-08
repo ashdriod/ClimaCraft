@@ -1,3 +1,3 @@
 .window {
-    background-color: #3498db; /* Change the hex code to your desired background color */
+    background: linear-gradient(to right, #3498db, #88c3ff); /* Example gradient from blue to lighter blue */
 }

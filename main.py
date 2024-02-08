@@ -1,4 +1,5 @@
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -6,9 +7,8 @@ from gi.repository import Gtk
 from ui.window import MyWindow
 
 def main():
-    win = MyWindow()
-    win.connect("destroy", Gtk.main_quit)
-    win.show_all()
+    # The MyWindow class now handles everything, including showing the window and connecting the destroy signal
+    MyWindow()
     Gtk.main()
 
 if __name__ == "__main__":
