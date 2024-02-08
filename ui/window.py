@@ -2,12 +2,16 @@ import os
 
 import gi
 from gi.overrides import GdkPixbuf
-
+import threading
+from gi.repository import GLib
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 from api.weather import get_weather
-from .plot import generate_gnuplot_image
+from .temp_plot import generate_dual_axis_graph
+from .daily_overview import generate_temperature_overview_graph
 from api.forecast import fetch_weather_data, save_weather_data_to_csv
+from .windtemp import generate_wind_temperature_graph
+
 
 
 class MyWindow:
@@ -43,32 +47,44 @@ class MyWindow:
         window.get_style_context().add_class("window")
 
     def on_button_clicked(self, widget):
-        # Assuming get_weather() is correctly fetching a summary string for display
+        # Immediately update the label with current weather info
         weather_label = self.builder.get_object("weather_label")
-        weather_info = get_weather()  # Update this call as needed
-        weather_label.set_text(weather_info)
+        weather_info = get_weather()  # Assuming this returns a string of weather info
+        GLib.idle_add(weather_label.set_text, weather_info)
 
-        # Fetch detailed weather data and save it to CSV
-        location = "Freiburg"  # Or dynamically set based on user input or other logic
+        # Start the background task
+        threading.Thread(target=self.background_task, args=(weather_label,)).start()
+
+    from gi.repository import GdkPixbuf, GLib
+
+    def background_task(self, weather_label):
+        location = "Freiburg"
         weather_data = fetch_weather_data(location)
         if weather_data:
-            file_path = "data/weatherdata/weather_data.csv"  # Ensure this path exists
+            file_path = "data/weatherdata/weather_data.csv"
             save_weather_data_to_csv(weather_data, file_path)
             print(f"Weather data for {location} saved to {file_path}")
 
-        # Optional: Generate and display a plot based on the newly saved CSV
-        plot_image_path = "data/graph/test_plot.png"
-        # You would need to implement generate_gnuplot_image to create a plot from the CSV
-        generate_gnuplot_image(plot_image_path)  # Adjust this function as needed
-        # Load and display the generated image in the GtkImage widget
-        self.display_plot_image(plot_image_path)
+            # Temperature and Precipitation Graph
+            temp_precip_image_path = "data/graph/temperature_precipitation_graph.png"
+            generate_dual_axis_graph(file_path, temp_precip_image_path)
+            GLib.idle_add(self.display_plot_image, temp_precip_image_path, "plot_image")
 
-    def display_plot_image(self, image_path):
-        # Check if the image file exists
+            # Wind Speed and Direction with Temperature Graph
+            wind_temp_image_path = "data/graph/wind_temperature_graph.png"
+            generate_wind_temperature_graph(file_path, wind_temp_image_path)
+            GLib.idle_add(self.display_plot_image, wind_temp_image_path, "plot_image2")
+
+            # Comparative Daily Overview Graph
+            daily_overview_image_path = "data/graph/temperature_overview.png"
+            generate_temperature_overview_graph(file_path, daily_overview_image_path)  # Assume this function is defined
+            GLib.idle_add(self.display_plot_image, daily_overview_image_path, "plot_image3")
+
+    def display_plot_image(self, image_path, image_widget_name):
         if os.path.exists(image_path):
-            # Load the image from the file
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(image_path)
-            plot_image_widget = self.builder.get_object("plot_image")
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(image_path, 600, 550,
+                                                             True)  # Adjust these dimensions as needed
+            plot_image_widget = self.builder.get_object(image_widget_name)
             plot_image_widget.set_from_pixbuf(pixbuf)
         else:
             print(f"Error: The image file {image_path} does not exist.")
