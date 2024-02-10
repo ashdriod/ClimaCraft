@@ -16,6 +16,8 @@ idna==3.6
     # via
     #   -r requirements.in
     #   requests
+pango==0.0.1
+    # via -r requirements.in
 pycairo==1.25.1
     # via
     #   -r requirements.in

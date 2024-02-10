@@ -1,4 +1,3 @@
-# api/weather.py
 import requests
 
 def get_weather(location="Freiburg"):
@@ -8,12 +7,33 @@ def get_weather(location="Freiburg"):
         response = requests.get(api_url)
         data = response.json()
         if 'current' in data:
-            temperature = data['current']['temp_c']
-            condition = data['current']['condition']['text']
-            weather_info = f"Weather in {location}: {condition}, Temperature: {temperature}°C"
-            return weather_info
+            # Return a dictionary of data instead of a string
+            return {
+                'location': location,
+                'temperature_c': data['current']['temp_c'],
+                'condition': data['current']['condition']['text'],
+                'wind_kph': data['current']['wind_kph'],
+                'wind_dir': data['current']['wind_dir'],
+                'pressure_mb': data['current']['pressure_mb'],
+                'humidity': data['current']['humidity'],
+                'cloud': data['current']['cloud'],
+                'feelslike_c': data['current']['feelslike_c'],
+                'visibility_km': data['current']['vis_km'],
+            }
         else:
-            return "Error: Unable to fetch weather data."
+            return {"error": "Unable to fetch weather data."}
     except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return "Error: Unable to fetch weather data."
+        return {"error": f"Request exception: {e}"}
+
+
+def get_simplified_weather_info(location="Freiburg"):
+    weather_data = get_weather(location)
+    if 'error' not in weather_data:
+        # Constructing a simplified weather information string
+        simplified_info = (f"{weather_data['condition']}\n"
+                           f"{weather_data['location']}: "
+                           f"{weather_data['temperature_c']}°C")
+        return simplified_info
+    else:
+        return weather_data['error']
+

@@ -1,3 +1,31 @@
 .window {
-    background: linear-gradient(to right, #3498db, #88c3ff); /* Example gradient from blue to lighter blue */
+    background: linear-gradient(to right, #3498db, #88c3ff);
+}
+
+textview{
+    font-size: 100px;
+    font-weight: bold;
+    color: #000000;
+    background-color:rgba(0, 0, 0, 0); ;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+
+textview text { background-color: rgba(0, 0, 0, 0);  }
+textview text {border-radius: 8px; }
+textview text { padding: 6px 12px; }
+
+
+button {
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+button {
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 6px 12px;
 }
