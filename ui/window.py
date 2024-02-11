@@ -1,11 +1,17 @@
 import os
+import shutil
+import subprocess
+
 import gi
 from gi.overrides import GdkPixbuf
 import threading
 from gi.repository import GLib
+
+from ui.weatherlatex import get_weather_data_as_latex
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
-from api.weather import get_simplified_weather_info, get_wind_and_pressure_info, get_additional_weather_info
+from api.weather import get_simplified_weather_info, get_wind_and_pressure_info, get_additional_weather_info, get_weather
 from .temp_plot import generate_dual_axis_graph
 from .daily_overview import generate_temperature_overview_graph
 from api.forecast import fetch_weather_data, save_weather_data_to_csv
@@ -80,9 +86,38 @@ class MyWindow:
         threading.Thread(target=self.background_task, args=(weather_text_view,)).start()
 
     def on_download_latex_clicked(self, widget):
-        # Retrieve and process weather information for LaTeX download
-        weather_text_view = self.builder.get_object("weather_text_view")
-        weather_info = get_simplified_weather_info()
+        location = "Freiburg"  # Or get this dynamically from your GUI
+        latex_content = get_weather_data_as_latex(location)
+
+        latex_file_path = "latex/weather_report.tex"
+        output_directory = "latex"  # Specify the output directory
+
+        # Ensure the output directory exists
+        os.makedirs(output_directory, exist_ok=True)
+
+        # Write the LaTeX content to a file directly
+        with open(latex_file_path, "w") as file:
+            file.write(latex_content)  # Write the complete latex_content as it is
+
+        # Command to compile the LaTeX file to PDF and specify the output directory
+        compile_command = [
+            "pdflatex",
+            "-interaction=nonstopmode",
+            f"-output-directory={output_directory}",
+            latex_file_path
+        ]
+
+        try:
+            # Run the command
+            result = subprocess.run(compile_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+                                    text=True)
+            # Check for success
+            if result.returncode == 0:
+                print(f"Compilation successful. PDF saved in '{output_directory}' directory.")
+            else:
+                print("LaTeX compilation failed:", result.stderr)
+        except subprocess.CalledProcessError as e:
+            print("Error during compilation:", e)
 
     def background_task(self, weather_label):
         # Fetch and process weather data, then update the GUI with graphs

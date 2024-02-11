@@ -17,12 +17,12 @@ def get_months_from_csv(csv_file_path):
 
 def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desired_height=720):
     months_label = get_months_from_csv(csv_file_path)
-    month_or_months = "Month" if " and " not in months_label else "Months"
+    month_or_months = "Month" if " and " in months_label else "Months"
 
     # Ensure the output directory exists
     os.makedirs(os.path.dirname(image_path), exist_ok=True)
 
-    # Adjust the GNUplot script for readability and transparency
+    # Adjust the GNUplot script for readability and transparency, using column N for precipitation
     script_content = f"""
     set terminal pngcairo transparent enhanced size {desired_width},{desired_height}
     set output '{image_path}'
@@ -32,16 +32,16 @@ def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desi
     set format x "%d"  # Display only the day of the month
     set xlabel "{month_or_months}: {months_label}"
     set ylabel "Temperature (°C)"
-    set y2label "Chance of Rain (%)"
+    set y2label "Precipitation (mm)"
     set ytics nomirror
     set y2tics
     set grid
-    set title "Temperature and Precipitation Chance Over Time ({months_label})"
+    set title "Temperature and Precipitation Over Time ({months_label})"
     set style line 1 lt 1 lw 2 lc rgb "red"  # Thicker line for temperature
-    set style line 2 lt 2 lw 2 lc rgb "blue"  # Thicker line for precipitation chance
+    set style line 2 lt 2 lw 2 lc rgb "blue"  # Thicker line for precipitation
     plot \\
     "{csv_file_path}" using 1:2 with lines linestyle 1 title "Temperature", \\
-    "{csv_file_path}" using 1:3 axes x1y2 with lines linestyle 2 title "Chance of Rain"
+    "{csv_file_path}" using 1:14 axes x1y2 with lines linestyle 2 title "Precipitation"
     """.format(image_path=image_path, csv_file_path=csv_file_path, months_label=months_label, month_or_months=month_or_months)
 
     # Temp file to hold the GNUplot script
@@ -55,8 +55,3 @@ def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desi
     # Clean up: remove the temp script file
     os.remove(temp_script_path)
     print(f"Graph generated and saved to {image_path}")
-
-# Example usage
-csv_file_path = "data/weatherdata/weather_data.csv"
-image_path = "data/graph/dual_axis_graph.png"
-generate_dual_axis_graph(csv_file_path, image_path)
