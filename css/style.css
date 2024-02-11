@@ -11,21 +11,20 @@ textview{
     padding: 6px 12px;
 }
 
-
 textview text { background-color: rgba(0, 0, 0, 0);  }
-textview text {border-radius: 8px; }
-textview text { padding: 6px 12px; }
-
 
 button {
-    background-color: #3498db;
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 6px 12px;
+  color: #3273a8;
+  background-image: none;
+  font: 40px "Comic Sans";
+  background-color:rgba(0, 0, 0, 0);
 }
-button {
-    background-color: #3498db;
-    color: #ffffff;
+
+#wind_and_pressure_info_view , #additional_weather_info_view {
+    font-size: 40px;
+    font-weight: bold;
+    color: #f0f0f0; /* Light off-white color */
+    background-color: rgba(0, 0, 0, 0); /* Transparent background */
     border-radius: 8px;
     padding: 6px 12px;
 }

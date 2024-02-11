@@ -35,38 +35,40 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                        <object class="GtkTextView" id="weather_text_view">
+                      <object class="GtkTextView" id="weather_text_view">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="editable">False</property>
                         <property name="wrap-mode">word</property>
-                        <property name="justification">center</property>
+                        <property name="justification">fill</property>
                         <property name="cursor-visible">False</property>
                       </object>
-                        <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                        </packing>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
-                        <object class="GtkButton" id="weather_button">
-                            <property name="label">Refresh</property>
-                            <property name="can-focus">False</property>
-                            <property name="receives-default">False</property>
-                            <property name="relief">half</property>
-                            <property name="width-request">100</property>
-                            <property name="height-request">30</property>
-                            <signal name="clicked" handler="on_button_clicked" swapped="no"/>
-                        </object>
-                        <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                        </packing>
+                      <object class="GtkButton" id="weather_button">
+                        <property name="label">gtk-refresh</property>
+                        <property name="width-request">100</property>
+                        <property name="height-request">30</property>
+                        <property name="can-focus">False</property>
+                        <property name="receives-default">False</property>
+                        <property name="relief">none</property>
+                        <property name="use-stock">True</property>
+                        <property name="image-position">right</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="clicked" handler="on_button_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
-                </object>
-
+                  </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">0</property>
@@ -109,10 +111,58 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkTextView" id="wind_and_pressure_info">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="editable">False</property>
+                    <property name="wrap-mode">word</property>
+                    <property name="justification">center</property>
+                    <property name="cursor-visible">False</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="homogeneous">True</property>
+                    <child>
+                      <object class="GtkLabel" id="additional_weather_info">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">label</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="download_latex">
+                        <property name="label" translatable="yes">Download
+    Latex</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_download_latex_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">0</property>
+                  </packing>
                 </child>
               </object>
             </child>

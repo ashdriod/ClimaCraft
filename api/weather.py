@@ -37,3 +37,27 @@ def get_simplified_weather_info(location="Freiburg"):
     else:
         return weather_data['error']
 
+def get_wind_and_pressure_info(location="Freiburg"):
+    weather_data = get_weather(location)
+    if 'error' not in weather_data:
+        wind_and_pressure_info = (
+            f"Wind Speed: {weather_data['wind_kph']} kph\n"
+            f"Wind Direction: {weather_data['wind_dir']}\n"
+            f"Pressure: {weather_data['pressure_mb']} mb"
+        )
+        return wind_and_pressure_info
+    else:
+        return weather_data['error']
+
+
+def get_additional_weather_info(location="Freiburg"):
+    weather_data = get_weather(location)
+    if 'error' not in weather_data:
+        additional_weather_info = (
+            f"Cloud Cover: {weather_data['cloud']}%\n"
+            f"Feels Like: {weather_data['feelslike_c']}°C\n"
+            f"Visibility: {weather_data['visibility_km']} km"
+        )
+        return additional_weather_info
+    else:
+        return weather_data['error']
