@@ -12,7 +12,7 @@ def generate_weather_comparison_graph(csv_file_path, output_file_path):
 
     # GNUPlot command file content, adjusted for the given CSV structure
     gnuplot_commands = f"""
-    set terminal pngcairo size 800,600
+    set terminal pngcairo transparent size 800,600 enhanced font 'Verdana,10'
     set output '{output_file_path}'
     set style data histograms
     set style histogram cluster gap 1

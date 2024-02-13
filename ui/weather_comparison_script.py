@@ -9,7 +9,7 @@ def create_weather_comparison_csv():
 
     # Calculate the index for the predicted weather data
     hour = int(freiburg_weather[0])  # Now correctly reading the 'HH' format
-    predicted_row_index = hour + 2  # Adjusting to get the 16th row as an example
+    predicted_row_index = hour   # Adjusting to get the 16th row as an example
 
     # Read the predicted weather data from the general weather data file
     with open('data/weatherdata/weather_data.csv', mode='r') as file:
