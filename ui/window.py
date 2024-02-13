@@ -137,7 +137,7 @@ class MyWindow:
 
             create_weather_comparison_csv()
             weather_comparison_image_path = "data/graph/weather_comparison_graph.png"
-            weather_comparison_file_path = "data/weatherdata/new_weather_comparison.csv"
+            weather_comparison_file_path = "data/weatherdata/current_vs_forcasted_weather.csv"
             generate_weather_comparison_graph(weather_comparison_file_path, weather_comparison_image_path)
             GLib.idle_add(self.display_plot_image, weather_comparison_image_path, "plot_image3")
 
