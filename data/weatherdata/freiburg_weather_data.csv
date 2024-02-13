@@ -1,2 +1,2 @@
 timestamp,location,temperature_c,condition,wind_kph,wind_dir,pressure_mb,humidity,cloud,feelslike_c,visibility_km
-23,Freiburg,5.0,Clear,9.0,S,1022.0,81,0,2.9,10.0
+23,Freiburg,5.0,Clear,6.8,S,1022.0,87,0,2.9,10.0
