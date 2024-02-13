@@ -1,7 +1,7 @@
 import requests
 import csv
 import os
-
+from datetime import datetime
 
 def fetch_weather_data(location="Freiburg"):
     api_key = "f201b82ab7bf4b77974102847243101"
@@ -15,8 +15,23 @@ def fetch_weather_data(location="Freiburg"):
         print(f"Error fetching weather data: {e}")
         return None
 
-
 def save_weather_data_to_csv(weather_data, file_path):
+    # Check if the data is already up-to-date
+    if os.path.exists(file_path):
+        with open(file_path, mode='r') as file:
+            reader = csv.reader(file)
+            header = next(reader, None)  # Skip header
+            first_row = next(reader, None)
+
+            if first_row:
+                first_row_date_str = first_row[0].split(" ")[0]
+                first_row_date = datetime.strptime(first_row_date_str, "%Y-%m-%d").date()
+                today_date = datetime.now().date()
+
+                if first_row_date == today_date:
+                    print("Weather data is already up to date for today.")
+                    return
+
     # Ensure the directory exists
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
@@ -24,7 +39,7 @@ def save_weather_data_to_csv(weather_data, file_path):
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
 
-        # Write the header row with all the fields we're interested in
+        # Write the header row
         writer.writerow([
             "Time", "Temperature (C)", "Temperature (F)", "Is Day", "Condition Text",
             "Condition Icon", "Condition Code", "Wind MPH", "Wind KPH", "Wind Degree",
@@ -56,12 +71,10 @@ def save_weather_data_to_csv(weather_data, file_path):
 
     print(f"Data successfully written to {file_path}")
 
-
-
 if __name__ == "__main__":
     location = "Freiburg"
-    weather_data = fetch_weather_data(location)
+    file_path = "data/weatherdata/weather_data.csv"
 
+    weather_data = fetch_weather_data(location)
     if weather_data:
-        file_path = "data/weatherdata/weather_data.csv"
         save_weather_data_to_csv(weather_data, file_path)
