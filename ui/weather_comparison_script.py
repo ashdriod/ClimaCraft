@@ -2,7 +2,7 @@ import csv
 
 def create_weather_comparison_csv():
     # Read the current weather data from Freiburg weather data file
-    with open('data/weatherdata/freiburg_weather_data.csv', mode='r') as file:
+    with open('data/weatherdata/current_vs_forcasted_weather.csv', mode='r') as file:
         reader = csv.reader(file)
         next(reader)  # Skip the header row
         freiburg_weather = next(reader)  # Read the first line of actual data
@@ -34,7 +34,7 @@ def create_weather_comparison_csv():
     ]
 
     # Write the new data to a CSV file in the specified directory
-    with open('data/weatherdata/new_weather_comparison.csv', mode='w', newline='') as file:
+    with open('data/weatherdata/current_vs_forcasted_weather.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Temperature_C', 'Wind_KPH', 'Pressure_MB', 'Humidity', 'Visibility_KM'])
         writer.writerow(new_row_1)

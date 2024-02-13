@@ -8,21 +8,27 @@ def get_months_from_csv(csv_file_path):
     with open(csv_file_path, 'r') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # Skip the header row
-        for row in reader:
-            if row:  # Check if row is not empty
-                date_str = row[0]  # Assuming the first column is the date
-                date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-                months.add(date_obj.strftime("%B"))  # Extract the month name
+        # Process every 24th row for daily data (assuming hourly updates and starting from index 0)
+        for i, row in enumerate(reader):
+            if i % 24 == 0:  # Consider every 24th record to represent a day
+                if row:  # Check if row is not empty
+                    date_str = row[0]  # Assuming the first column is the date
+                    date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+                    months.add(date_obj.strftime("%B"))  # Extract the month name
+            if i >= 24 * 5:  # Break after processing data equivalent to 6 days
+                break
     return " and ".join(sorted(list(months)))  # Join month names with 'and'
 
 def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desired_height=720):
     months_label = get_months_from_csv(csv_file_path)
-    month_or_months = "Month" if " and " in months_label else "Months"
+    month_or_months = "Month" if " and " not in months_label else "Months"
 
     # Ensure the output directory exists
     os.makedirs(os.path.dirname(image_path), exist_ok=True)
 
-    # Adjust the GNUplot script for readability and transparency, using column N for precipitation
+    # Adjust the GNUplot script for readability and transparency
+    # Note: This script assumes the temperature is in column 2 and precipitation in column 14
+    # Adjust these column indices as per your CSV structure
     script_content = f"""
     set terminal pngcairo transparent enhanced size {desired_width},{desired_height}
     set output '{image_path}'
@@ -37,8 +43,8 @@ def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desi
     set y2tics
     set grid
     set title "Temperature and Precipitation Over Time ({months_label})"
-    set style line 1 lt 1 lw 2 lc rgb "red"  # Thicker line for temperature
-    set style line 2 lt 2 lw 2 lc rgb "blue"  # Thicker line for precipitation
+    set style line 1 lt 1 lw 2 lc rgb "red"  # Temperature line style
+    set style line 2 lt 2 lw 2 lc rgb "blue"  # Precipitation line style
     plot \\
     "{csv_file_path}" using 1:2 with lines linestyle 1 title "Temperature", \\
     "{csv_file_path}" using 1:14 axes x1y2 with lines linestyle 2 title "Precipitation"
