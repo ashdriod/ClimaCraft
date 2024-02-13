@@ -41,6 +41,7 @@ def generate_dual_axis_graph(csv_file_path, image_path, desired_width=1280, desi
     set y2label "Precipitation (mm)"
     set ytics nomirror
     set y2tics
+    set y2range [0:*]  # Adjust the range as per your data
     set grid
     set title "Temperature and Precipitation Over Time ({months_label})"
     set style line 1 lt 1 lw 2 lc rgb "red"  # Temperature line style

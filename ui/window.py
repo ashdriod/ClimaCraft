@@ -16,7 +16,7 @@ from api.weather import get_simplified_weather_info, get_wind_and_pressure_info,
 from .temp_plot import generate_dual_axis_graph
 from .weather_comparison_script import  create_weather_comparison_csv
 from api.forecast import fetch_weather_data, save_weather_data_to_csv
-from .windtemp import generate_wind_temperature_graph
+from .wind_speed_gust_direction import wind_speed_gust_direction
 
 
 class MyWindow:
@@ -131,8 +131,8 @@ class MyWindow:
             generate_dual_axis_graph(file_path, temp_precip_image_path)
             GLib.idle_add(self.display_plot_image, temp_precip_image_path, "plot_image")
 
-            wind_temp_image_path = "data/graph/wind_temperature_graph.png"
-            generate_wind_temperature_graph(file_path, wind_temp_image_path)
+            wind_temp_image_path = "data/graph/wind_speed_gust_direction_graph.png"
+            wind_speed_gust_direction(file_path, wind_temp_image_path)
             GLib.idle_add(self.display_plot_image, wind_temp_image_path, "plot_image2")
 
             create_weather_comparison_csv()

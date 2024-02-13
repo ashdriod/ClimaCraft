@@ -61,10 +61,27 @@ def get_weather_data_as_latex(location="Freiburg"):
 
         latex_content += "\\section*{Weather at a Glance }\n" + detailed_narrative
 
-        latex_content += "\n\\paragraph{}This graph provides a clear idea about the temperature and precipitation in " + location + ".\n"
+        latex_content += "\n\\paragraph{}This graph offers a detailed overview of the temperature and precipitation in " + location + ", providing a clear visualization of the climate trends. By comparing the temperature (in degrees Celsius) and precipitation levels, the graph enables an intuitive understanding of the weather patterns, highlighting seasonal changes and potential anomalies.\n"
         latex_content += "\\begin{figure}[h]\n\\centering\n"
         latex_content += "\\includegraphics[width=0.8\\textwidth]{data/graph/temperature_precipitation_graph.png}\n"
         latex_content += "\\caption{Temperature and Precipitation Overview in " + location + "}\n"
+        latex_content += "\\end{figure}\n"
+
+        latex_content += "\n\\paragraph{}The following graph delves into the dynamics of wind speed, gust strength, and direction over the specified months at " + location + ". With wind speed measured in kilometers per hour, gust strength similarly quantified, and wind direction indicated in degrees, the visual representation employs distinct colors and line styles for clarity: blue signifies wind speed, green for gusts, and red indicates wind direction. This graph not only visualizes the data on a day-to-day basis but also emphasizes the variability and trends within the observed period, enriching our understanding of local wind patterns.\n"
+        latex_content += "\\begin{figure}[h]\n\\centering\n"
+        latex_content += "\\includegraphics[width=0.8\\textwidth]{data/graph/wind_speed_gust_direction_graph.png}\n"
+        latex_content += "\\caption{Detailed Wind Speed, Gust, and Direction Variations over Time in " + location + "}\n"
+        latex_content += "\\end{figure}\n"
+
+        latex_content += "\n\\paragraph{}Figure 3 presents a compelling comparison between actual and predicted weather metrics at " + location + ", including temperature, wind speed, atmospheric pressure, humidity, and visibility. Observed conditions—temperature at " + str(
+            temperature) + "°C, wind speed at " + str(
+            wind_speed) + " kph, wind direction as '" + wind_direction + "', pressure at " + str(
+            pressure) + " mb, humidity at " + str(humidity) + "\\%, cloud coverage at " + str(
+            cloud_coverage) + "\\%, feels like temperature at " + str(feels_like) + "°C, and visibility at " + str(
+            visibility) + " km—are meticulously juxtaposed against their predicted counterparts. This analysis not only underscores the accuracy of weather forecasts but also reflects the intricate weather phenomena characterizing " + location + ".\n"
+        latex_content += "\\begin{figure}[h]\n\\centering\n"
+        latex_content += "\\includegraphics[width=0.8\\textwidth]{data/graph/weather_comparison_graph.png}\n"
+        latex_content += "\\caption{Actual vs. Predicted Weather Conditions Analysis in " + location + ", highlighting temperature, wind speed and direction, pressure, humidity, cloud coverage, feels-like temperature, and visibility.}\n"
         latex_content += "\\end{figure}\n"
 
     # Ensure the document is properly closed
