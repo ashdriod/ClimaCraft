@@ -1,19 +1,36 @@
 from api.weather import get_weather
 
+
 def get_weather_data_as_latex(location="Freiburg"):
     weather_data = get_weather(location)
-    # Start the LaTeX document with preamble
-    latex_content = """\\documentclass[12pt]{article}
-\\usepackage[utf8]{inputenc}
-\\usepackage{hyperref}
-\\usepackage{graphicx}
+    latex_content = """\\documentclass[12pt]{{article}}
+    \\usepackage[utf8]{{inputenc}}
+    \\usepackage{{hyperref}}
+    \\usepackage{{graphicx}}
+    \\usepackage{{fancyhdr}}
+    \\usepackage{{geometry}}  % Adjusting document margins
 
-\\title{Weather Report for %s}
-\\date{}
+    % Adjust document margins
+    \\geometry{{left=1in, right=1in, top=1in, bottom=1in}}
 
-\\begin{document}
-\\maketitle
-""" % location
+    \\pagestyle{{fancy}}
+    \\fancyhf{{}} % Clear all header and footer fields
+    \\renewcommand{{\\headrulewidth}}{{0pt}} % No line in header
+    \\renewcommand{{\\footrulewidth}}{{0pt}} % No line in footer
+
+    % Custom title with bold and larger font
+    \\title{{\\vspace{{-2cm}} % Adjust the vertical space as needed
+           \\Huge\\textbf{{Clima Craft Report}} \\\\ [0.5cm]  % Making the title big and bold
+           \\Large{{your lightweight LaTeX weather report}} % Subtitle in a slightly smaller size
+           \\vspace{{0.5cm}} \\\\ \\hrule \\vspace{{-0.2cm}} \\hrule
+    }}
+    \\author{{}}
+    \\date{{}}
+
+    \\begin{{document}}
+    \\maketitle
+    \\fancyhead[L]{{\\textbf{{\\large Clima Craft Report}}}}  % Left header: Custom title, bold and larger
+    """.format(location=location)
 
     if 'error' in weather_data:
         # Add error message if present

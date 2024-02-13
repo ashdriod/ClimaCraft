@@ -1,4 +1,8 @@
 import requests
+import csv
+import os
+from datetime import datetime
+
 
 def get_weather(location="Freiburg"):
     api_key = "f201b82ab7bf4b77974102847243101"
@@ -7,8 +11,7 @@ def get_weather(location="Freiburg"):
         response = requests.get(api_url)
         data = response.json()
         if 'current' in data:
-            # Return a dictionary of data instead of a string
-            return {
+            weather_data = {
                 'location': location,
                 'temperature_c': data['current']['temp_c'],
                 'condition': data['current']['condition']['text'],
@@ -20,10 +23,34 @@ def get_weather(location="Freiburg"):
                 'feelslike_c': data['current']['feelslike_c'],
                 'visibility_km': data['current']['vis_km'],
             }
+            save_weather_data(weather_data)
+            return weather_data
         else:
             return {"error": "Unable to fetch weather data."}
     except requests.exceptions.RequestException as e:
         return {"error": f"Request exception: {e}"}
+
+
+def save_weather_data(weather_data):
+    # Ensure the directory exists
+    directory = "data/weatherdata"
+    os.makedirs(directory, exist_ok=True)
+    filename = os.path.join(directory, f"{weather_data['location'].lower().replace(' ', '_')}_weather_data.csv")
+
+    with open(filename, mode='w', newline='') as file:  # Changed mode from 'a' to 'w'
+        fieldnames = ['timestamp', 'location', 'temperature_c', 'condition', 'wind_kph', 'wind_dir', 'pressure_mb',
+                      'humidity', 'cloud', 'feelslike_c', 'visibility_km']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        writer.writeheader()  # Write headers every time (since we're overwriting)
+
+        # Add current timestamp with only the hour
+        current_time = datetime.now().strftime('%H')  # Changed format to only include the hour
+        weather_data['timestamp'] = current_time
+
+        writer.writerow(weather_data)
+
+
 
 
 def get_simplified_weather_info(location="Freiburg"):
