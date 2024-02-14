@@ -22,19 +22,3 @@ jobs:
             
       - name: Build Docker Image on Linux
         run: docker build -t my-application-linux .
-
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      
-      # Setup cache for Python dependencies
-      - uses: actions/cache@v2
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            
-      - name: Build Docker Image on Windows
-        run: docker build -t my-application-windows .
