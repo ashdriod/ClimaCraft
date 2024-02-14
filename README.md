@@ -1,3 +1,6 @@
+**Author:** Ashwin Vazhappilly  
+**Matrikelnummer:** 5575882  
+
 # ClimaCraft [![Cross-Platform Docker Build](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml/badge.svg)](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml)
 
 ClimaCraft is a lightweight Python GTK application designed to fetch and display weather information in a user-friendly manner. Leveraging data from OpenWeatherMap.org, it presents the weather details through various graphical representations and provides a unique feature of generating a narrative weather report in a LaTeX PDF document.
