@@ -41,9 +41,20 @@ Once the image is successfully built, you can run the Docker image with this scr
 ./run_climacraft.sh
 ```
 
+**Important:**
+
+The script uses `xhost +local:docker` to ensure X11 forwarding is enabled for Docker. This might require running the script with `sudo` permissions to modify host configuration for X11 forwarding.
+
+
 ## Usage
 
 Upon running the application via the Docker script, an internet connection is required to fetch the weather data. When you click on the "Download LaTeX" option, the report is generated inside the Docker container. However, the script is designed to mount the relevant output directory to a downloads folder on your host machine. Therefore, you can find the generated PDF file, named `weather_report.pdf`, in the specified downloads folder.
+
+**Important Note:**
+
+**However, it's crucial to understand that while the app is running inside the Docker container, the file will only be accessible in the download folder once you close the app.** This behavior differs from running the application natively, where files populate in real-time. Therefore, to access the generated report, ensure that you close the application properly.
+
+
 
 ## Screenshots
 
