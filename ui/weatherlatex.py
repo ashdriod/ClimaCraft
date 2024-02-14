@@ -1,36 +1,41 @@
 from api.weather import get_weather
 
+from datetime import datetime
 
 def get_weather_data_as_latex(location="Freiburg"):
+    today = datetime.now()
+    day_suffix = lambda n: "th" if 11 <= n <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    today_date = today.strftime(f"%d{day_suffix(today.day)} %b")
     weather_data = get_weather(location)
-    latex_content = """\\documentclass[12pt]{{article}}
+    latex_content = f"""
+    \\documentclass[11pt]{{article}}
     \\usepackage[utf8]{{inputenc}}
-    \\usepackage{{hyperref}}
     \\usepackage{{graphicx}}
     \\usepackage{{fancyhdr}}
-    \\usepackage{{geometry}}  % Adjusting document margins
+    \\usepackage{{geometry}}
+    \\usepackage{{times}}  % Times New Roman font
+    \\usepackage{{lipsum}}  % For generating dummy text
 
-    % Adjust document margins
-    \\geometry{{left=1in, right=1in, top=1in, bottom=1in}}
+    % Adjusted page geometry for more space
+    \\geometry{{left=1in, right=1in, top=1.5in, bottom=1in}}  % Increased top margin
 
+    % Header and footer styles
     \\pagestyle{{fancy}}
-    \\fancyhf{{}} % Clear all header and footer fields
-    \\renewcommand{{\\headrulewidth}}{{0pt}} % No line in header
-    \\renewcommand{{\\footrulewidth}}{{0pt}} % No line in footer
+    \\fancyhf{{}}
+    \\renewcommand{{\\headrulewidth}}{{0pt}}
+    \\renewcommand{{\\footrulewidth}}{{0pt}}
+    \\fancyhead[C]{{\\textbf{{Your Latex Weather Report}}}}
+    \\fancyfoot[C]{{Page \\thepage}}
 
-    % Custom title with bold and larger font
-    \\title{{\\vspace{{-2cm}} % Adjust the vertical space as needed
-           \\Huge\\textbf{{Clima Craft Report}} \\\\ [0.5cm]  % Making the title big and bold
-           \\Large{{your lightweight LaTeX weather report}} % Subtitle in a slightly smaller size
-           \\vspace{{0.5cm}} \\\\ \\hrule \\vspace{{-0.2cm}} \\hrule
-    }}
-    \\author{{}}
+    \\title{{\\textbf{{\\Huge Clima Craft Report for {today_date} - {location}}}}}  % Adjusted title position
     \\date{{}}
 
     \\begin{{document}}
     \\maketitle
-    \\fancyhead[L]{{\\textbf{{\\large Clima Craft Report}}}}  % Left header: Custom title, bold and larger
-    """.format(location=location)
+
+    \\thispagestyle{{fancy}}
+    """
+
 
     if 'error' in weather_data:
         # Add error message if present
@@ -81,7 +86,7 @@ def get_weather_data_as_latex(location="Freiburg"):
             visibility) + " km—are meticulously juxtaposed against their predicted counterparts. This analysis not only underscores the accuracy of weather forecasts but also reflects the intricate weather phenomena characterizing " + location + ".\n"
         latex_content += "\\begin{figure}[h]\n\\centering\n"
         latex_content += "\\includegraphics[width=0.8\\textwidth]{data/graph/weather_comparison_graph.png}\n"
-        latex_content += "\\caption{Actual vs. Predicted Weather Conditions Analysis in " + location + ", highlighting temperature, wind speed and direction, pressure, humidity, cloud coverage, feels-like temperature, and visibility.}\n"
+        latex_content += "\\caption{Actual vs. Predicted Weather Conditions Analysis in " + location + ", highlighting temperature, wind speed, pressure, humidity and visibility.}\n"
         latex_content += "\\end{figure}\n"
 
     # Ensure the document is properly closed

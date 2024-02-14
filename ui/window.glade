@@ -6,7 +6,7 @@
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
     <property name="border-width">10</property>
-    <property name="title">Clima Craft</property>
+    <property name="title">Clima Craft=</property>
     <property name="default-width">400</property>
     <property name="default-height">200</property>
     <signal name="destroy" handler="on_main_window_destroy" swapped="no"/>
