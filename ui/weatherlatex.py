@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from api.weather import get_weather
 
-from datetime import datetime
 
 def get_weather_data_as_latex(location="Freiburg"):
     today = datetime.now()
@@ -35,7 +36,6 @@ def get_weather_data_as_latex(location="Freiburg"):
 
     \\thispagestyle{{fancy}}
     """
-
 
     if 'error' in weather_data:
         # Add error message if present

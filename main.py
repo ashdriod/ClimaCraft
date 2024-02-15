@@ -3,11 +3,11 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-# Adjust the import path if necessary based on your project structure
+# The MyWindow class now handles everything, including showing the window and connecting the destroy signal
 from ui.window import MyWindow
 
 def main():
-    # The MyWindow class now handles everything, including showing the window and connecting the destroy signal
+    # Create an instance of the MyWindow class and start the GTK main loop
     MyWindow()
     Gtk.main()
 

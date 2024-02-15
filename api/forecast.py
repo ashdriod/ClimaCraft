@@ -1,7 +1,9 @@
-import requests
 import csv
 import os
 from datetime import datetime
+
+import requests
+
 
 def fetch_weather_data(location="Freiburg"):
     api_key = "f201b82ab7bf4b77974102847243101"
@@ -14,6 +16,7 @@ def fetch_weather_data(location="Freiburg"):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching weather data: {e}")
         return None
+
 
 def save_weather_data_to_csv(weather_data, file_path):
     # Check if the data is already up-to-date
@@ -70,6 +73,7 @@ def save_weather_data_to_csv(weather_data, file_path):
                 ])
 
     print(f"Data successfully written to {file_path}")
+
 
 if __name__ == "__main__":
     location = "Freiburg"

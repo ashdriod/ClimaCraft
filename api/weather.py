@@ -1,7 +1,8 @@
-import requests
 import csv
 import os
 from datetime import datetime
+
+import requests
 
 
 def get_weather(location="Freiburg"):
@@ -51,8 +52,6 @@ def save_weather_data(weather_data):
         writer.writerow(weather_data)
 
 
-
-
 def get_simplified_weather_info(location="Freiburg"):
     weather_data = get_weather(location)
     if 'error' not in weather_data:
@@ -63,6 +62,7 @@ def get_simplified_weather_info(location="Freiburg"):
         return simplified_info
     else:
         return weather_data['error']
+
 
 def get_wind_and_pressure_info(location="Freiburg"):
     weather_data = get_weather(location)
