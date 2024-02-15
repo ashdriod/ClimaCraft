@@ -34,8 +34,3 @@ sudo usermod -aG docker $USER
 
 # Echo a completion message
 echo "Docker installation completed successfully!"
-
-
-
-#Make the script executable: chmod +x install_docker.sh.
-#Execute the script with sudo: sudo ./install_docker.sh.
