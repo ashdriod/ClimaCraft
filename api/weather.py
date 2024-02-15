@@ -6,7 +6,7 @@ import requests
 
 
 def get_weather(location="Freiburg"):
-    api_key = "f201b82ab7bf4b77974102847243101"
+    api_key = "874edd8d83674f1db8101409241502"
     api_url = f"https://api.weatherapi.com/v1/current.json?q={location}&key={api_key}"
     try:
         response = requests.get(api_url)

@@ -1,12 +1,10 @@
 import csv
 import os
 from datetime import datetime
-
 import requests
 
-
 def fetch_weather_data(location="Freiburg"):
-    api_key = "f201b82ab7bf4b77974102847243101"
+    api_key = "874edd8d83674f1db8101409241502"
     api_url = f"https://api.weatherapi.com/v1/forecast.json?q={location}&days=7&key={api_key}"
 
     try:
@@ -17,23 +15,21 @@ def fetch_weather_data(location="Freiburg"):
         print(f"Error fetching weather data: {e}")
         return None
 
-
 def save_weather_data_to_csv(weather_data, file_path):
-    # Check if the data is already up-to-date
+    # Check if the file exists and read the first data row to check the date
     if os.path.exists(file_path):
         with open(file_path, mode='r') as file:
-            reader = csv.reader(file)
-            header = next(reader, None)  # Skip header
-            first_row = next(reader, None)
+            reader = csv.DictReader(file)
+            first_row = next(reader, None)  # Get the first data row
 
             if first_row:
-                first_row_date_str = first_row[0].split(" ")[0]
+                first_row_date_str = first_row["Time"].split(" ")[0]  # Extract date part
                 first_row_date = datetime.strptime(first_row_date_str, "%Y-%m-%d").date()
                 today_date = datetime.now().date()
 
                 if first_row_date == today_date:
                     print("Weather data is already up to date for today.")
-                    return
+                    return  # Exit the function if the data is already up to date
 
     # Ensure the directory exists
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
