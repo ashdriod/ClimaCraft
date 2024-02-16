@@ -1,4 +1,4 @@
-**Author:** Ashwin Vazhappilly  
+_**Author:** Ashwin Vazhappilly  
 **Matrikelnummer:** 5575882
 
 # ClimaCraft [![Cross-Platform Docker Build](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml/badge.svg)](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml)
@@ -90,4 +90,4 @@ major changes, it's best to open an issue first to discuss what you would like t
 
 This project is licensed under the Apache License 2.0. This license allows you the freedom to use, modify, and
 distribute the software as you see fit, provided that you include the original copyright notice and permission notice in
-all copies or substantial portions of the software.
+all copies or substantial portions of the software._
