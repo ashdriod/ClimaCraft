@@ -70,10 +70,10 @@ def save_weather_data_to_csv(weather_data, file_path):
 
     print(f"Data successfully written to {file_path}")
 
-
 if __name__ == "__main__":
     location = "Freiburg"
-    file_path = "data/weatherdata/weather_data.csv"
+    file_path = "../data/weatherdata/weather_data.csv"
+
 
     weather_data = fetch_weather_data(location)
     if weather_data:
