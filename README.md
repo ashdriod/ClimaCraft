@@ -88,6 +88,13 @@ Contributions are greatly appreciated. If you have suggestions for improvements 
 free to open an issue first to discuss your ideas or concerns. For minor fixes, pull requests can be made directly. For
 major changes, it's best to open an issue first to discuss what you would like to change.
 
+
+## Report
+I have written a detailed LaTeX report on the development of this project, which can be found in the `Linux Report` directory. It can be viewed by also clicking here: [Report](Linux%20Report/Clima_Craft_Report.pdf)
+
+
+
+
 ## License
 
 This project is licensed under the Apache License 2.0. This license allows you the freedom to use, modify, and
