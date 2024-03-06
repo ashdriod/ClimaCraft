@@ -1,5 +1,4 @@
-**Author:** Ashwin Vazhappilly  
-**Matrikelnummer:** 5575882
+
 
 # ClimaCraft [![Cross-Platform Docker Build](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml/badge.svg)](https://github.com/ashdriod/ClimaCraft/actions/workflows/main.yml) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
